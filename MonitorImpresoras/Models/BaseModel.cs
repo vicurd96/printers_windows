@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
-namespace MonitorImpresoras.ViewModels
+namespace MonitorImpresoras.Models
 {
-    public class ViewModelBase : INotifyPropertyChanged
+    public class BaseModel : INotifyPropertyChanged
     {
-        public ViewModelBase() { }
-
         public event PropertyChangedEventHandler PropertyChanged;
         protected void RaisePropertyChanged(string propertyName)
         {
