@@ -17,6 +17,9 @@
             <RowDefinition Height="33*" />
             <RowDefinition Height="33*" />
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="1" Grid.Column="1" FontSize="16" Text="{Binding Path=MainModel.Texto}" />
+        <StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">
+            <TextBlock FontSize="16" Text="{Binding Path=MainModel.Texto}" />
+            <Button Command="{Binding Path=ButtonCommand}" Content="Cambiar texto" Margin="0 10" />
+        </StackPanel>
     </Grid>
 </Window>
