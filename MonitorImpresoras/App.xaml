@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:MonitorImpresoras"
              StartupUri="Views/MainView.xaml">
     <Application.Resources>
-         
+        <FontFamily x:Key="FontAwesome">/MonitorImpresoras;component/Fonts/FontAwesome.otf#Font Awesome 5 Free Solid</FontFamily>
     </Application.Resources>
 </Application>

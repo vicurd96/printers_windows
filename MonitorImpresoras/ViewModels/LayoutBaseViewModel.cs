@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Controls;
 
 namespace MonitorImpresoras.ViewModels
 {
@@ -11,12 +12,12 @@ namespace MonitorImpresoras.ViewModels
         public LayoutBaseModel LayoutBaseModel { get; }
 
         public LayoutBaseViewModel() { LayoutBaseModel = new LayoutBaseModel(); }
-        public LayoutBaseViewModel(List<IPageViewModel> pageViewModels)
+        public LayoutBaseViewModel(List<UserControl> pageViewModels)
         {
             LayoutBaseModel = new LayoutBaseModel();
             LayoutBaseModel.PageViewModels.AddRange(pageViewModels);
         }
-        protected void ChangeViewModel(IPageViewModel viewModel)
+        protected void ChangeViewModel(UserControl viewModel)
         {
             if (!LayoutBaseModel.PageViewModels.Contains(viewModel))
                 LayoutBaseModel.PageViewModels.Add(viewModel);

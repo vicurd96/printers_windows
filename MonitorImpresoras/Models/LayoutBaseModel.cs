@@ -2,25 +2,25 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using System.Windows.Controls;
 
 namespace MonitorImpresoras.Models
 {
-    public interface IPageViewModel { }
     public class LayoutBaseModel : INotifyPropertyChanged
     {
-        private IPageViewModel _previousPageViewModel, _currentPageViewModel;
+        private UserControl _previousPageViewModel, _currentPageViewModel;
 
-        private List<IPageViewModel> _pageViewModels;
-        public List<IPageViewModel> PageViewModels {
+        private List<UserControl> _pageViewModels;
+        public List<UserControl> PageViewModels {
             get {
                 if (_pageViewModels == null)
-                    _pageViewModels = new List<IPageViewModel>();
+                    _pageViewModels = new List<UserControl>();
 
                 return _pageViewModels;
             }
 
         }
-        public IPageViewModel CurrentPageViewModel {
+        public UserControl CurrentPageViewModel {
             get {
                 return _currentPageViewModel;
             }
@@ -31,7 +31,7 @@ namespace MonitorImpresoras.Models
             }
         }
 
-        public IPageViewModel PreviousPageViewModel {
+        public UserControl PreviousPageViewModel {
             get {
                 return _previousPageViewModel;
             }

@@ -1,35 +1,40 @@
 ﻿using MonitorImpresoras.Helpers;
 using MonitorImpresoras.Models;
+using MonitorImpresoras.Views;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace MonitorImpresoras.ViewModels
 {
-    public class MainViewModel : ViewModelBase
+    public class MainViewModel : LayoutBaseViewModel
     {
         public MainModel MainModel { get; }
+        #region COMANDOS
+        private ICommand _onLoad;
 
-        private ICommand _buttonCommand;
-
-        public ICommand ButtonCommand {
+        public ICommand OnLoad {
             get {
-                if(_buttonCommand == null)
+                if(_onLoad == null)
                 {
-                    _buttonCommand = new RelayCommand((param) =>
+                    _onLoad = new RelayCommand((param) =>
                     {
-                        MainModel.Texto = "Cambio de texto";
+                        List<UserControl> ListViews = new List<UserControl>();
+                        ListViews.Add(new ColaImpresionView());
+                        ListViews.Add(new ProcesosImpresionView());
+                        LayoutBaseModel.PageViewModels.AddRange(ListViews);
                     });
                 }
-                return _buttonCommand;
+                return _onLoad;
             }
         }
+        #endregion
 
-        public MainViewModel()
+        public MainViewModel() : base()
         {
             MainModel = new MainModel();
-            MainModel.Texto = "Esto es una prueba";
         }
     }
 }
