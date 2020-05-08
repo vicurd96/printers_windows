@@ -1,16 +1,6 @@
 ﻿using MonitorImpresoras.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
+using System.Printing;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace MonitorImpresoras.Views
 {
@@ -19,10 +9,10 @@ namespace MonitorImpresoras.Views
     /// </summary>
     public partial class ProcesosImpresionView : UserControl
     {
-        public ProcesosImpresionView()
+        public ProcesosImpresionView(LocalPrintServer local, PrintServer network)
         {
             InitializeComponent();
-            DataConext = new ProcesosImpresionViewModel();
+            DataContext = new ProcesosImpresionViewModel(local, network);
         }
     }
 }

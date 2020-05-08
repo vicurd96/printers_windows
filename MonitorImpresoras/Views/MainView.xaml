@@ -22,7 +22,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="10*" />
-            <RowDefinition Height="10*" />
+            <RowDefinition Height="Auto" MaxHeight="200" />
             <RowDefinition Height="10*" />
             <RowDefinition Height="10*" />
             <RowDefinition Height="10*" />
@@ -100,9 +100,8 @@
                 </MenuItem>
             </Menu>
         </DockPanel>
-        <!--<StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">
-            <TextBlock FontSize="16" Text="{Binding Path=MainModel.Texto}" />
-            <Button Command="{Binding Path=ButtonCommand}" Content="Cambiar texto" Margin="0 10" />
-        </StackPanel>-->
+        <ContentControl 
+            Grid.Column="1" Grid.ColumnSpan="8" Grid.Row="2"
+            Content="{Binding Path=LayoutBaseModel.CurrentPageViewModel}" />
     </Grid>
 </Window>
