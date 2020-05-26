@@ -10,10 +10,10 @@ namespace MonitorImpresoras.Views
     /// </summary>
     public partial class ImpresorasView : UserControl
     {
-        public ImpresorasView(LocalPrintServer local, PrintServer network)
+        public ImpresorasView(PrintServer servidor)
         {
             InitializeComponent();
-            DataContext = new ImpresorasViewModel(local, network);
+            DataContext = new ImpresorasViewModel(servidor);
         }
     }
 }

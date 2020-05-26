@@ -8,6 +8,7 @@
         Title="Monitor impresoras" Height="450" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
             <ColumnDefinition Width="10*"/>
             <ColumnDefinition Width="10*"/>
             <ColumnDefinition Width="10*"/>
@@ -16,15 +17,14 @@
             <ColumnDefinition Width="10*"/>
             <ColumnDefinition Width="10*"/>
             <ColumnDefinition Width="10*"/>
-            <ColumnDefinition Width="10*"/>
-            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="10*" />
             <RowDefinition Height="Auto" MaxHeight="200" />
             <RowDefinition Height="10*" />
-            <RowDefinition Height="10*" />
+            <RowDefinition Height="Auto" MaxHeight="200" />
             <RowDefinition Height="10*" />
             <RowDefinition Height="10*" />
             <RowDefinition Height="10*" />
@@ -102,6 +102,9 @@
         </DockPanel>
         <ContentControl 
             Grid.Column="1" Grid.ColumnSpan="8" Grid.Row="2"
-            Content="{Binding Path=LayoutBaseModel.CurrentPageViewModel}" />
+            Content="{Binding Path=LayoutBaseModel.ImpresorasView}" />
+        <ContentControl 
+            Grid.Column="1" Grid.ColumnSpan="8" Grid.Row="4"
+            Content="{Binding Path=LayoutBaseModel.ColaView}" />
     </Grid>
 </Window>

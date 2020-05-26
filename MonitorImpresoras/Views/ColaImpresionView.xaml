@@ -7,6 +7,26 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+        <DataGrid ItemsSource="{Binding Path=CollectionView}"
+              CanUserSortColumns="True"
+              HorizontalScrollBarVisibility="Auto" 
+              VerticalScrollBarVisibility="Auto" 
+              IsReadOnly="True" 
+              AutoGenerateColumns="False" 
+              HorizontalAlignment="Stretch"
+              RowHeaderWidth="0">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Job Id" Binding="{Binding Id}" Width="1*">
+                    <DataGridTextColumn.EditingElementStyle>
+                        <Style TargetType="TextBox">
+                            <Setter Property="MaxLength" Value="5"/>
+                        </Style>
+                    </DataGridTextColumn.EditingElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Nombre documento" Binding="{Binding Name}" Width="3*" />
+                <DataGridTextColumn Header="Estado" Binding="{Binding Status}" Width="1*" />
+                <DataGridTextColumn Header="Dueño" Width="1*" />
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </UserControl>

@@ -9,34 +9,18 @@ namespace MonitorImpresoras.ViewModels
     public class LayoutBaseViewModel
     {
         public LayoutBaseModel LayoutBaseModel { get; }
-        protected PrintServer network;
-        protected LocalPrintServer local;
+        protected PrintServer servidor;
 
-        public LayoutBaseViewModel(LocalPrintServer local, PrintServer network) 
+        public LayoutBaseViewModel(PrintServer servidor) 
         { 
             LayoutBaseModel = new LayoutBaseModel(); 
-            this.network = network;
-            this.local = local;
+            this.servidor = servidor;
         }
-        public LayoutBaseViewModel(List<UserControl> pageViewModels, LocalPrintServer local, PrintServer network)
+        public LayoutBaseViewModel(List<UserControl> pageViewModels, PrintServer servidor)
         {
             LayoutBaseModel = new LayoutBaseModel();
             LayoutBaseModel.PageViewModels.AddRange(pageViewModels);
-            this.network = network;
-            this.local = local;
-        }
-        protected void ChangeViewModel(UserControl viewModel)
-        {
-            if (!LayoutBaseModel.PageViewModels.Contains(viewModel))
-                LayoutBaseModel.PageViewModels.Add(viewModel);
-
-            LayoutBaseModel.CurrentPageViewModel = LayoutBaseModel.PageViewModels
-                .FirstOrDefault(vm => vm == viewModel);
-        }
-
-        protected void GoPreviousViewModel(object obj)
-        {
-            ChangeViewModel(LayoutBaseModel.PreviousPageViewModel);
+            this.servidor = servidor;
         }
     }
 }

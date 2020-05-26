@@ -168,7 +168,7 @@ namespace MonitorImpresoras.Helpers
             bool bResult = FindNextPrinterChangeNotification(_changeHandle,
                            out pdwChange, _notifyOptions, out pNotifyInfo);
             //If the Printer Change Notification Call did not give data, exit code
-            if ((bResult == false) || (((int)pNotifyInfo) == 0)) return;
+            if ((bResult == false) || ((pNotifyInfo.ToInt32()) == 0)) return;
             //If the Change Notification was not relgated to job, exit code
             bool bJobRelatedChange =
               ((pdwChange & PRINTER_CHANGES.PRINTER_CHANGE_ADD_JOB) ==
@@ -186,7 +186,7 @@ namespace MonitorImpresoras.Helpers
             PRINTER_NOTIFY_INFO info =
               (PRINTER_NOTIFY_INFO)Marshal.PtrToStructure(pNotifyInfo,
                typeof(PRINTER_NOTIFY_INFO));
-            int pData = (int)pNotifyInfo +
+            int pData = pNotifyInfo.ToInt32() +
                          Marshal.SizeOf(typeof(PRINTER_NOTIFY_INFO));
             PRINTER_NOTIFY_INFO_DATA[] data =
                     new PRINTER_NOTIFY_INFO_DATA[info.Count];
@@ -213,7 +213,7 @@ namespace MonitorImpresoras.Helpers
                     PrintSystemJobInfo pji = null;
                     try
                     {
-                        _spooler = new PrintQueue(new PrintServer(), _spoolerName);
+                        _spooler = new PrintQueue(_server ?? new PrintServer(), _spoolerName);
                         pji = _spooler.GetJob(intJobID);
                         if (!objJobDict.ContainsKey(intJobID))
                             objJobDict[intJobID] = pji.Name;
@@ -225,12 +225,9 @@ namespace MonitorImpresoras.Helpers
                         objJobDict.TryGetValue(intJobID, out strJobName);
                         if (strJobName == null) strJobName = "";
                     }
-                    if (OnJobStatusChange != null)
-                    {
-                        //Let us raise the event
-                        OnJobStatusChange(this,
-                          new PrintJobChangeEventArgs(intJobID, strJobName, jStatus, pji));
-                    }
+                    //Let us raise the event
+                    OnJobStatusChange?.Invoke(this,
+                      new PrintJobChangeEventArgs(intJobID, strJobName, jStatus, pji));
                 }
             }
             #endregion

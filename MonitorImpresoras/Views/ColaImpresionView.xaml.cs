@@ -9,10 +9,10 @@ namespace MonitorImpresoras.Views
     /// </summary>
     public partial class ColaImpresionView : UserControl
     {
-        public ColaImpresionView(LocalPrintServer local, PrintServer network)
+        public ColaImpresionView(PrintServer servidor)
         {
             InitializeComponent();
-            DataContext = new ColaImpresionViewModel(local, network);
+            DataContext = new ColaImpresionViewModel(servidor);
         }
     }
 }

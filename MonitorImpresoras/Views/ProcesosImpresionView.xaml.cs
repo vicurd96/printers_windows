@@ -9,10 +9,10 @@ namespace MonitorImpresoras.Views
     /// </summary>
     public partial class ProcesosImpresionView : UserControl
     {
-        public ProcesosImpresionView(LocalPrintServer local, PrintServer network)
+        public ProcesosImpresionView(PrintServer servidor)
         {
             InitializeComponent();
-            DataContext = new ProcesosImpresionViewModel(local, network);
+            DataContext = new ProcesosImpresionViewModel(servidor);
         }
     }
 }

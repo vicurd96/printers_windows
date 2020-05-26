@@ -8,7 +8,7 @@ namespace MonitorImpresoras.Models
 {
     public class LayoutBaseModel : INotifyPropertyChanged
     {
-        private UserControl _previousPageViewModel, _currentPageViewModel;
+        private UserControl _impresorasView, _procesosView, _colaView;
 
         private List<UserControl> _pageViewModels;
         public List<UserControl> PageViewModels {
@@ -20,26 +20,36 @@ namespace MonitorImpresoras.Models
             }
 
         }
-        public UserControl CurrentPageViewModel {
+        public UserControl ImpresorasView {
             get {
-                return _currentPageViewModel;
+                return _impresorasView;
             }
             set {
-                PreviousPageViewModel = _currentPageViewModel;
-                _currentPageViewModel = value;
-                RaisePropertyChanged("CurrentPageViewModel");
+                _impresorasView = value;
+                RaisePropertyChanged("ImpresorasView");
             }
         }
 
-        public UserControl PreviousPageViewModel {
+        public UserControl ProcesosView {
             get {
-                return _previousPageViewModel;
+                return _procesosView;
             }
             set {
-                _previousPageViewModel = value;
-                RaisePropertyChanged("PreviousPageViewModel");
+                _procesosView = value;
+                RaisePropertyChanged("ProcesosView");
             }
         }
+
+        public UserControl ColaView {
+            get {
+                return _colaView;
+            }
+            set {
+                _colaView = value;
+                RaisePropertyChanged("ColaView");
+            }
+        }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void RaisePropertyChanged(string propertyName)

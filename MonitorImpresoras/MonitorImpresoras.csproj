@@ -5,6 +5,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>appbar_printer_y9u_icon.ico</ApplicationIcon>
+    <Platforms>AnyCPU;x86</Platforms>
   </PropertyGroup>
 
   <ItemGroup>

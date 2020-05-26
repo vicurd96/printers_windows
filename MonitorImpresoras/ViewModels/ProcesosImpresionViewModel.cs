@@ -10,7 +10,7 @@ namespace MonitorImpresoras.ViewModels
     {
         public ProcesosImpresionModel ProcesosImpresionModel { get; }
 
-        public ProcesosImpresionViewModel(LocalPrintServer local, PrintServer network) : base(local, network)
+        public ProcesosImpresionViewModel(PrintServer servidor) : base(servidor)
         {
 
         }

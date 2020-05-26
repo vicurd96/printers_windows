@@ -16,13 +16,12 @@ namespace MonitorImpresoras.ViewModels
         #region COMANDOS
         #endregion
 
-        public MainViewModel(LocalPrintServer local, PrintServer network) : base(local, network)
+        public MainViewModel(PrintServer servidor) : base(servidor)
         {
             MainModel = new MainModel();
-            LayoutBaseModel.PageViewModels.Add(new ImpresorasView(local, network));
-            LayoutBaseModel.PageViewModels.Add(new ColaImpresionView(local, network));
-            LayoutBaseModel.PageViewModels.Add(new ProcesosImpresionView(local, network));
-            ChangeViewModel(LayoutBaseModel.PageViewModels[0]);
+            LayoutBaseModel.ImpresorasView = new ImpresorasView(servidor);
+            LayoutBaseModel.ProcesosView = new ProcesosImpresionView(servidor);
+            LayoutBaseModel.ColaView = new ColaImpresionView(servidor);
         }
     }
 }

@@ -8,12 +8,10 @@ namespace MonitorImpresoras.ViewModels
 {
     public class ViewModelBase : INotifyPropertyChanged
     {
-        protected PrintServer network;
-        protected LocalPrintServer local;
-        public ViewModelBase(LocalPrintServer local, PrintServer network) 
+        protected PrintServer servidor;
+        public ViewModelBase(PrintServer servidor) 
         {
-            this.network = network;
-            this.local = local;
+            this.servidor = servidor;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
