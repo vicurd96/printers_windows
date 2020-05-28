@@ -15,14 +15,15 @@ namespace MonitorImpresoras.ViewModels
 {
     public class ColaImpresionViewModel : ViewModelBase
     {
-        public List<TrabajoImpresionModel> ColaImpresionModel { get; } = new List<TrabajoImpresionModel>();
+        public ObservableCollection<TrabajoImpresionModel> ColaImpresionModel { get; set; }
         public CollectionView CollectionView { get => (CollectionView)CollectionViewSource.GetDefaultView(ColaImpresionModel); }
         private static object _syncLock = new object();
 
         public ColaImpresionViewModel(PrintServer servidor) : base(servidor)
         {
+            ColaImpresionModel = new ObservableCollection<TrabajoImpresionModel>();
             Inicializar();
-            BindingOperations.EnableCollectionSynchronization(ColaImpresionModel, _syncLock);
+            //BindingOperations.EnableCollectionSynchronization(ColaImpresionModel, _syncLock);
             Mediator.Subscribe("ActualizarColaImpresion", Actualizar);
         }
 
@@ -35,18 +36,15 @@ namespace MonitorImpresoras.ViewModels
                 PrintJobInfoCollection jobs = queue.GetPrintJobInfoCollection();
                 foreach(PrintSystemJobInfo job in jobs)
                 {
-                    lock (_syncLock)
+                    ColaImpresionModel.Add(new TrabajoImpresionModel
                     {
-                        ColaImpresionModel.Add(new TrabajoImpresionModel
-                        {
-                            Id = job.JobIdentifier,
-                            Name = job.Name,
-                            JobStatus = (JOBSTATUS)job.JobStatus,
-                            NumPages = job.NumberOfPages,
-                            Owner = job.Submitter,
-                            Priority = ((int)job.Priority).ToString()
-                        });
-                    }
+                        Id = job.JobIdentifier,
+                        Name = job.Name,
+                        JobStatus = (JOBSTATUS)job.JobStatus,
+                        NumPages = job.NumberOfPages,
+                        Owner = job.Submitter,
+                        Priority = ((int)job.Priority).ToString()
+                    });
                 }
             }
 
@@ -56,32 +54,36 @@ namespace MonitorImpresoras.ViewModels
         {
             if (job != null)
             {
-                TrabajoImpresionModel PrintJob = (TrabajoImpresionModel)job;
-                PrintQueueCollection queues = new PrintServer().GetPrintQueues();
-                PrintSystemJobInfo infoJob = null;
-                foreach (PrintQueue queue in queues)
+                App.Current.Dispatcher.Invoke((Action)delegate
                 {
-                    queue.Refresh();
-                    try
+                    TrabajoImpresionModel PrintJob = (TrabajoImpresionModel)job;
+                    PrintQueueCollection queues = new PrintServer().GetPrintQueues();
+                    PrintSystemJobInfo infoJob = null;
+                    foreach (PrintQueue queue in queues)
                     {
-                        infoJob = queue.GetJob(PrintJob.Id);
-                        break;
-                    }
-                    catch (Exception)
-                    {
-                        continue;
-                    }
-                }
-                if(infoJob != null)
-                {
-                    TrabajoImpresionModel model = ColaImpresionModel.FirstOrDefault(c => c.Id == PrintJob.Id);
-                    if (model != null)
-                        model.JobStatus = PrintJob.JobStatus;
-                    else
-                    {
-                        lock (_syncLock)
+                        queue.Refresh();
+                        try
                         {
-                            ColaImpresionModel.Add(new TrabajoImpresionModel { 
+                            infoJob = queue.GetJob(PrintJob.Id);
+                            break;
+                        }
+                        catch (Exception)
+                        {
+                            continue;
+                        }
+                    }
+                    TrabajoImpresionModel model = ColaImpresionModel.FirstOrDefault(c => c.Id == PrintJob.Id);
+                    if (infoJob != null)
+                    {
+                        if (model != null)
+                        {
+                            model.JobStatus = (JOBSTATUS)infoJob.JobStatus;
+                            model.Estado = ((int)infoJob.JobStatus).ToString();
+                        }
+                        else
+                        {
+                            ColaImpresionModel.Add(new TrabajoImpresionModel
+                            {
                                 Id = infoJob.JobIdentifier,
                                 Estado = ((int)infoJob.JobStatus).ToString(),
                                 JobStatus = (JOBSTATUS)infoJob.JobStatus,
@@ -92,9 +94,16 @@ namespace MonitorImpresoras.ViewModels
                             });
                         }
                     }
+                    else
+                    {
+                        if (model != null)
+                        {
+                            ColaImpresionModel.Remove(model);
+                        }
+                    }
                     CollectionView.Refresh();
-                }
-                GC.Collect();
+                    GC.Collect();
+                });
             }
         }
     }

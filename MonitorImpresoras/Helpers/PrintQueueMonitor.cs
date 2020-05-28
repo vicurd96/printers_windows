@@ -34,9 +34,12 @@ namespace MonitorImpresoras.Helpers
         {
             _jobID = intJobID;
             _jobName = strJobName;
-            _jobOwner = objJobInfo.Submitter;
-            _jobNumPages = objJobInfo.NumberOfPages;
-            _jobPriority = (int)objJobInfo.Priority;
+            if (objJobInfo != null)
+            {
+                _jobOwner = objJobInfo.Submitter;
+                _jobNumPages = objJobInfo.NumberOfPages;
+                _jobPriority = (int)objJobInfo.Priority;
+            }
             _jobStatus = jStatus;
             _jobInfo = objJobInfo;
         }

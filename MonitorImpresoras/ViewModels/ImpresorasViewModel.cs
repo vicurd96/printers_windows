@@ -33,7 +33,7 @@ namespace MonitorImpresoras.ViewModels
                 ImpresorasModel.Add(new ImpresorasModel { 
                     Nombre = queue.Name, 
                     isCompartida = queue.IsShared, 
-                    Estado = queue.QueueStatus.ToString(), 
+                    Status = (int)queue.QueueStatus, 
                     Puerto = queue.QueuePort.Name,
                     Prioridad = queue.Priority
                 });
@@ -70,7 +70,7 @@ namespace MonitorImpresoras.ViewModels
                     {
                         Nombre = queue.Name,
                         isCompartida = queue.IsShared,
-                        Estado = queue.QueueStatus.ToString(),
+                        Status = (int)queue.QueueStatus,
                         Puerto = queue.QueuePort.Name,
                         Prioridad = queue.Priority
                     });
