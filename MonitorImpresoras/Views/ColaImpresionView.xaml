@@ -6,7 +6,8 @@
              xmlns:local="clr-namespace:MonitorImpresoras.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+    <StackPanel>
+        <TextBlock Text="Cola de impresión" FontSize="16" Margin="5" FontWeight="ExtraLight" />
         <DataGrid ItemsSource="{Binding Path=CollectionView}"
               CanUserSortColumns="True"
               HorizontalScrollBarVisibility="Auto" 
@@ -14,19 +15,22 @@
               IsReadOnly="True" 
               AutoGenerateColumns="False" 
               HorizontalAlignment="Stretch"
-              RowHeaderWidth="0">
+              RowHeaderWidth="0"
+                  MaxHeight="150">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Job Id" Binding="{Binding Id}" Width="1*">
+                <!--<DataGridTextColumn Header="Número" Binding="{Binding Id}" Width="1*">
                     <DataGridTextColumn.EditingElementStyle>
                         <Style TargetType="TextBox">
                             <Setter Property="MaxLength" Value="5"/>
                         </Style>
                     </DataGridTextColumn.EditingElementStyle>
-                </DataGridTextColumn>
-                <DataGridTextColumn Header="Nombre documento" Binding="{Binding Name}" Width="3*" />
-                <DataGridTextColumn Header="Estado" Binding="{Binding Status}" Width="1*" />
-                <DataGridTextColumn Header="Dueño" Width="1*" />
+                </DataGridTextColumn>-->
+                <DataGridTextColumn Header="Nombre documento" Binding="{Binding Name}" Width="3*"/>
+                <DataGridTextColumn Header="Páginas" MaxWidth="64" Binding="{Binding NumPages}" Width="1*" />
+                <DataGridTextColumn Header="Estado" Binding="{Binding Estado}" Width="1*" />
+                <DataGridTextColumn Header="Usuario" Binding="{Binding Owner}" Width="1*" />
+                <DataGridTextColumn Header="Prioridad" Binding="{Binding Priority}" Width="1*" SortDirection="Descending"/>
             </DataGrid.Columns>
         </DataGrid>
-    </Grid>
+    </StackPanel>
 </UserControl>

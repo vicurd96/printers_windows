@@ -4,8 +4,16 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MonitorImpresoras.Views"
+             xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <CollectionViewSource Source="" x:Key="GridItems">
+            <CollectionViewSource.SortDescriptions>
+                <scm:SortDescription PropertyName="Nombre" Direction="Ascending"/>
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+    </UserControl.Resources>
     <DataGrid ItemsSource="{Binding Path=CollectionView}"
               CanUserSortColumns="True"
               HorizontalScrollBarVisibility="Auto" 
@@ -13,9 +21,10 @@
               IsReadOnly="True" 
               AutoGenerateColumns="False" 
               HorizontalAlignment="Stretch"
-              RowHeaderWidth="0">
+              RowHeaderWidth="0"
+              MaxHeight="150">
         <DataGrid.Columns>
-            <DataGridTextColumn Header="Nombre" Binding="{Binding Nombre}" Width="2*">
+            <DataGridTextColumn Header="Nombre" Binding="{Binding Nombre}" Width="2*" SortDirection="Ascending" SortMemberPath="Nombre">
                 <DataGridTextColumn.EditingElementStyle>
                     <Style TargetType="TextBox">
                         <Setter Property="MaxLength" Value="5"/>
@@ -24,14 +33,14 @@
             </DataGridTextColumn>
             <DataGridTextColumn Header="Compartida" Binding="{Binding Compartida}" Width="1*" />
             <DataGridTextColumn Header="Puerto" Binding="{Binding Puerto}" Width="1*" />
-            <DataGridTextColumn Header="Estado" Binding="{Binding Estado}" Width="1*" />
-            <DataGridTextColumn Header="Prioridad" Binding="{Binding Prioridad}" Width="1*">
-                <DataGridTextColumn.CellStyle>
-                    <Style>
-                        <Setter Property="FrameworkElement.HorizontalAlignment" Value="Right"/>
-                    </Style>
-                </DataGridTextColumn.CellStyle>
-            </DataGridTextColumn>
+            <DataGridTextColumn Header="Estado" Binding="{Binding Estado}" Width="1*"/>
+            <DataGridTemplateColumn Header="Prioridad" Width="1*" SortMemberPath="Prioridad">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=Prioridad}"/>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
         </DataGrid.Columns>
     </DataGrid>
 </UserControl>

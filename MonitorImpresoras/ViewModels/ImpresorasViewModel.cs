@@ -46,10 +46,15 @@ namespace MonitorImpresoras.ViewModels
 
         private void pqm_OnJobStatusChange(object Sender, PrintJobChangeEventArgs e)
         {
-            App.Current.Dispatcher.Invoke(delegate
-            {
-                Actualizar();
-                Mediator.Notify("ActualizarColaImpresion", new ColaImpresionModel { Id = e.JobID, Name = e.JobName, Status = e.JobStatus });
+            Actualizar();
+            Mediator.Notify("ActualizarColaImpresion", new TrabajoImpresionModel { 
+                Id = e.JobID, 
+                Name = e.JobName, 
+                JobStatus = e.JobStatus,
+                NumPages = e.JobNumPages,
+                Owner = e.JobOwner,
+                Estado = ((int)e.JobStatus).ToString(),
+                Priority = e.JobPriority.ToString()
             });
         }
 

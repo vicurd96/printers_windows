@@ -15,12 +15,14 @@ namespace MonitorImpresoras.ViewModels
 {
     public class ColaImpresionViewModel : ViewModelBase
     {
-        public List<ColaImpresionModel> ColaImpresionModel { get; } = new List<ColaImpresionModel>();
+        public List<TrabajoImpresionModel> ColaImpresionModel { get; } = new List<TrabajoImpresionModel>();
         public CollectionView CollectionView { get => (CollectionView)CollectionViewSource.GetDefaultView(ColaImpresionModel); }
+        private static object _syncLock = new object();
 
         public ColaImpresionViewModel(PrintServer servidor) : base(servidor)
         {
             Inicializar();
+            BindingOperations.EnableCollectionSynchronization(ColaImpresionModel, _syncLock);
             Mediator.Subscribe("ActualizarColaImpresion", Actualizar);
         }
 
@@ -33,11 +35,18 @@ namespace MonitorImpresoras.ViewModels
                 PrintJobInfoCollection jobs = queue.GetPrintJobInfoCollection();
                 foreach(PrintSystemJobInfo job in jobs)
                 {
-                    ColaImpresionModel.Add(new ColaImpresionModel { 
-                        Id = job.JobIdentifier,
-                        Name = job.Name,
-                        Status = (JOBSTATUS)job.JobStatus
-                    });
+                    lock (_syncLock)
+                    {
+                        ColaImpresionModel.Add(new TrabajoImpresionModel
+                        {
+                            Id = job.JobIdentifier,
+                            Name = job.Name,
+                            JobStatus = (JOBSTATUS)job.JobStatus,
+                            NumPages = job.NumberOfPages,
+                            Owner = job.Submitter,
+                            Priority = ((int)job.Priority).ToString()
+                        });
+                    }
                 }
             }
 
@@ -47,22 +56,45 @@ namespace MonitorImpresoras.ViewModels
         {
             if (job != null)
             {
-                ColaImpresionModel PrintJob = (ColaImpresionModel)job;
-                if (PrintJob != null)
+                TrabajoImpresionModel PrintJob = (TrabajoImpresionModel)job;
+                PrintQueueCollection queues = new PrintServer().GetPrintQueues();
+                PrintSystemJobInfo infoJob = null;
+                foreach (PrintQueue queue in queues)
                 {
-                    ColaImpresionModel model = ColaImpresionModel.FirstOrDefault(c => c.Id == PrintJob.Id);
+                    queue.Refresh();
+                    try
+                    {
+                        infoJob = queue.GetJob(PrintJob.Id);
+                        break;
+                    }
+                    catch (Exception)
+                    {
+                        continue;
+                    }
+                }
+                if(infoJob != null)
+                {
+                    TrabajoImpresionModel model = ColaImpresionModel.FirstOrDefault(c => c.Id == PrintJob.Id);
                     if (model != null)
-                        model.Status = PrintJob.Status;
+                        model.JobStatus = PrintJob.JobStatus;
                     else
                     {
-                        Dispatcher.CurrentDispatcher.BeginInvoke(delegate
+                        lock (_syncLock)
                         {
-                            ColaImpresionModel.Add(PrintJob);
-                        });
-                            
+                            ColaImpresionModel.Add(new TrabajoImpresionModel { 
+                                Id = infoJob.JobIdentifier,
+                                Estado = ((int)infoJob.JobStatus).ToString(),
+                                JobStatus = (JOBSTATUS)infoJob.JobStatus,
+                                Name = infoJob.Name,
+                                NumPages = infoJob.NumberOfPages,
+                                Owner = infoJob.Submitter,
+                                Priority = ((int)infoJob.Priority).ToString()
+                            });
+                        }
                     }
                     CollectionView.Refresh();
                 }
+                GC.Collect();
             }
         }
     }

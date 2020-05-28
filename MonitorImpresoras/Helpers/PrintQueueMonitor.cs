@@ -17,9 +17,15 @@ namespace MonitorImpresoras.Helpers
         private string _jobName = "";
         private JOBSTATUS _jobStatus = new JOBSTATUS();
         private PrintSystemJobInfo _jobInfo = null;
+        private string _jobOwner = "";
+        private int _jobNumPages;
+        private int _jobPriority;
         #endregion
         public int JobID { get { return _jobID; } }
         public string JobName { get { return _jobName; } }
+        public string JobOwner { get { return _jobOwner; } }
+        public int JobNumPages { get { return _jobNumPages; } }
+        public int JobPriority { get { return _jobPriority; } }
         public JOBSTATUS JobStatus { get { return _jobStatus; } }
         public PrintSystemJobInfo JobInfo { get { return _jobInfo; } }
         public PrintJobChangeEventArgs(int intJobID, string strJobName,
@@ -28,6 +34,9 @@ namespace MonitorImpresoras.Helpers
         {
             _jobID = intJobID;
             _jobName = strJobName;
+            _jobOwner = objJobInfo.Submitter;
+            _jobNumPages = objJobInfo.NumberOfPages;
+            _jobPriority = (int)objJobInfo.Priority;
             _jobStatus = jStatus;
             _jobInfo = objJobInfo;
         }
