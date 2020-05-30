@@ -16,7 +16,8 @@
               AutoGenerateColumns="False" 
               HorizontalAlignment="Stretch"
               RowHeaderWidth="0"
-                  MaxHeight="150">
+                  MaxHeight="150"
+                  SelectedItem="{Binding Path=JobSelected, Mode=TwoWay}">
             <DataGrid.Columns>
                 <!--<DataGridTextColumn Header="Número" Binding="{Binding Id}" Width="1*">
                     <DataGridTextColumn.EditingElementStyle>

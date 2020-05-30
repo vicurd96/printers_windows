@@ -220,11 +220,17 @@ dmPanningHeight == {26}",
     public struct JOB_INFO_1
     {
         public UInt32 JobId;
+        [MarshalAs(UnmanagedType.LPStr)]
         public string pPrinterName;
+        [MarshalAs(UnmanagedType.LPStr)]
         public string pMachineName;
+        [MarshalAs(UnmanagedType.LPStr)]
         public string pUserName;
+        [MarshalAs(UnmanagedType.LPStr)]
         public string pDocument;
+        [MarshalAs(UnmanagedType.LPStr)]
         public string pDatatype;
+        [MarshalAs(UnmanagedType.LPStr)]
         public string pStatus;
         public UInt32 Status;
         public UInt32 Priority;
@@ -232,6 +238,40 @@ dmPanningHeight == {26}",
         public UInt32 TotalPages;
         public UInt32 PagesPrinted;
         public SYSTEMTIME Submitted;
+    }
+
+    public enum Win32Error
+    {
+        ERROR_UNKNOWN_PRINTPROCESSOR = 1798
+    }
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+    public struct JOB_INFO_2
+    {
+        public UInt32 JobId;
+        public IntPtr pPrinterName;
+        public IntPtr pMachineName;
+        public IntPtr pUserName;
+        public IntPtr pDocument;
+        public IntPtr pNotifyName;
+        public IntPtr pDatatype;
+        public IntPtr pPrintProcessor;
+        public IntPtr pParameters;
+        public IntPtr pDriverName;
+        public IntPtr pDevMode;
+        public IntPtr pStatus;
+        public IntPtr pSecurityDescriptor;
+        public UInt32 Status;
+        public UInt32 Priority;
+        public UInt32 Position;
+        public UInt32 StartTime;
+        public UInt32 UntilTime;
+        public UInt32 TotalPages;
+        public UInt32 Size;
+        public SYSTEMTIME Submitted;
+        public UInt32 Time;
+        public UInt32 PagesPrinted;
+
     }
 
     public struct JOBINFO

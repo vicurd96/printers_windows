@@ -73,7 +73,7 @@
                             <TextBlock Text="Opciones"/>
                         </DockPanel>
                     </MenuItem.Header>
-                    <MenuItem>
+                    <MenuItem Command="{Binding Path=SubirPrioridadCommand}">
                         <MenuItem.Header>
                             <DockPanel>
                                 <TextBlock Text="&#xf0aa;" FontFamily="{StaticResource FontAwesome}" Margin="0 0 5 0" VerticalAlignment="Center" Foreground="Green" />
@@ -81,7 +81,7 @@
                             </DockPanel>
                         </MenuItem.Header>
                     </MenuItem>
-                    <MenuItem>
+                    <MenuItem Command="{Binding Path=BajarPrioridadCommand}">
                         <MenuItem.Header>
                             <DockPanel>
                                 <TextBlock Text="&#xf0ab;" FontFamily="{StaticResource FontAwesome}" Margin="0 0 5 0" VerticalAlignment="Center" Foreground="Red" />
@@ -89,7 +89,7 @@
                             </DockPanel>
                         </MenuItem.Header>
                     </MenuItem>
-                    <MenuItem>
+                    <MenuItem Command="{Binding Path=CancelarJobCommand}">
                         <MenuItem.Header>
                             <DockPanel>
                                 <TextBlock Text="&#xf057;" FontFamily="{StaticResource FontAwesome}" Margin="0 0 5 0" VerticalAlignment="Center" Foreground="Red" />

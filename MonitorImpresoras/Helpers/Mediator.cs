@@ -4,12 +4,26 @@ using System.Text;
 
 namespace MonitorImpresoras.Helpers
 {
+    public enum Accion
+    {
+        SubirPrioridad,
+        BajarPrioridad,
+    }
+
+    public enum Metodo
+    {
+        ActualizarJobs,
+        CambiarPrioridadJob,
+        CancelarJob,
+        PausarImpresion
+    }
+
     public static class Mediator
     {
-        private static IDictionary<string, List<Action<object>>> pl_dict =
-           new Dictionary<string, List<Action<object>>>();
+        private static IDictionary<Metodo, List<Action<object>>> pl_dict =
+           new Dictionary<Metodo, List<Action<object>>>();
 
-        public static void Subscribe(string token, Action<object> callback)
+        public static void Subscribe(Metodo token, Action<object> callback)
         {
             if (!pl_dict.ContainsKey(token))
             {
@@ -28,13 +42,13 @@ namespace MonitorImpresoras.Helpers
             }
         }
 
-        public static void Unsubscribe(string token, Action<object> callback)
+        public static void Unsubscribe(Metodo token, Action<object> callback)
         {
             if (pl_dict.ContainsKey(token))
                 pl_dict[token].Remove(callback);
         }
 
-        public static void Notify(string token, object args = null)
+        public static void Notify(Metodo token, object args = null)
         {
             if (pl_dict.ContainsKey(token))
                 foreach (var callback in pl_dict[token])
