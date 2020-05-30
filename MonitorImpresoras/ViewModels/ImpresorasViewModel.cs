@@ -26,7 +26,9 @@ namespace MonitorImpresoras.ViewModels
 
         public void Inicializar()
         {
-            PrintQueueCollection queues = servidor.GetPrintQueues();
+            PrintQueueCollection queues = servidor.GetPrintQueues(new EnumeratedPrintQueueTypes[] { 
+                EnumeratedPrintQueueTypes.WorkOffline
+            });
 
             foreach (PrintQueue queue in queues)
             {
@@ -40,6 +42,7 @@ namespace MonitorImpresoras.ViewModels
                 PrintQueueMonitor pqm = new PrintQueueMonitor(queue.Name, servidor);
                 listMonitor.Add(pqm);
                 pqm.OnJobStatusChange += new PrintJobStatusChanged(pqm_OnJobStatusChange);
+                pqm.OnPrinterStatusChange += new PrinterStatusChanged(pqm_OnPrinterStatusChange);
             }
             CollectionView.Refresh();
         }
@@ -47,22 +50,33 @@ namespace MonitorImpresoras.ViewModels
         private void pqm_OnJobStatusChange(object Sender, PrintJobChangeEventArgs e)
         {
             Actualizar();
-            Mediator.Notify(Metodo.ActualizarJobs, new TrabajoImpresionModel { 
-                Id = e.JobID, 
-                Name = e.JobName, 
-                JobStatus = e.JobStatus,
-                NumPages = e.JobNumPages,
-                Owner = e.JobOwner,
-                Estado = ((int)e.JobStatus).ToString(),
-                Priority = e.JobPriority.ToString()
-            });
+            if (!string.IsNullOrEmpty(e.JobName))
+            {
+                Mediator.Notify(Metodo.ActualizarJobs, new TrabajoImpresionModel
+                {
+                    Id = e.JobID,
+                    Name = e.JobName,
+                    JobStatus = e.JobStatus,
+                    NumPages = e.JobNumPages,
+                    Owner = e.JobOwner,
+                    Estado = ((int)e.JobStatus).ToString(),
+                    Priority = e.JobPriority.ToString()
+                });
+            }
+        }
+
+        private void pqm_OnPrinterStatusChange(object Sender, PrinterChangeEventArgs e)
+        {
+            Actualizar();
         }
 
         private void Actualizar()
         {
-            App.Current.Dispatcher.Invoke(delegate
+            App.Current.Dispatcher.BeginInvoke(delegate
             {
-                PrintQueueCollection queues = new PrintServer().GetPrintQueues();
+                PrintQueueCollection queues = servidor.GetPrintQueues(new EnumeratedPrintQueueTypes[] {
+                    EnumeratedPrintQueueTypes.WorkOffline
+                });
                 ImpresorasModel.Clear();
                 foreach (PrintQueue queue in queues)
                 {

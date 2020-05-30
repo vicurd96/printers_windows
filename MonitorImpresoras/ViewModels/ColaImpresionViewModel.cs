@@ -55,7 +55,9 @@ namespace MonitorImpresoras.ViewModels
 
         private void Inicializar()
         {
-            PrintQueueCollection queues = servidor.GetPrintQueues();
+            PrintQueueCollection queues = servidor.GetPrintQueues(new EnumeratedPrintQueueTypes[] {
+                EnumeratedPrintQueueTypes.WorkOffline
+            });
             foreach(PrintQueue queue in queues)
             {
                 queue.Refresh();
@@ -83,7 +85,9 @@ namespace MonitorImpresoras.ViewModels
                 App.Current.Dispatcher.Invoke((Action)delegate
                 {
                     TrabajoImpresionModel PrintJob = (TrabajoImpresionModel)job;
-                    PrintQueueCollection queues = new PrintServer().GetPrintQueues();
+                    PrintQueueCollection queues = servidor.GetPrintQueues(new EnumeratedPrintQueueTypes[] {
+                        EnumeratedPrintQueueTypes.WorkOffline
+                    });
                     PrintSystemJobInfo infoJob = null;
                     foreach (PrintQueue queue in queues)
                     {
@@ -140,7 +144,9 @@ namespace MonitorImpresoras.ViewModels
                 App.Current.Dispatcher.BeginInvoke((Action)delegate
                 {
                     PrintSystemJobInfo infoJob = null;
-                    PrintQueueCollection queues = servidor.GetPrintQueues();
+                    PrintQueueCollection queues = servidor.GetPrintQueues(new EnumeratedPrintQueueTypes[] {
+                        EnumeratedPrintQueueTypes.WorkOffline
+                    });
                     foreach (PrintQueue queue in queues)
                     {
                         queue.Refresh();
@@ -167,7 +173,9 @@ namespace MonitorImpresoras.ViewModels
                 App.Current.Dispatcher.BeginInvoke((Action)delegate
                 {
                     PrintSystemJobInfo infoJob = null;
-                    PrintQueueCollection queues = servidor.GetPrintQueues();
+                    PrintQueueCollection queues = servidor.GetPrintQueues(new EnumeratedPrintQueueTypes[] {
+                        EnumeratedPrintQueueTypes.WorkOffline
+                    });
                     PrintQueue printer = null;
                     IntPtr _printerHandle = IntPtr.Zero;
                     foreach (PrintQueue queue in queues)
@@ -216,10 +224,6 @@ namespace MonitorImpresoras.ViewModels
                                 }
                                 throw new Exception("SetJob() Failed with error code " + Marshal.GetLastWin32Error());
                             }
-                            //if (!SetJob(_printerHandle, infoJob.JobIdentifier, 1, ptr, 0))
-                            //{
-                            //    throw new Exception("SetJob() Failed with error code " + Marshal.GetLastWin32Error());
-                            //}
                             ClosePrinter(_printerHandle);
                         }
                     }

@@ -9,7 +9,7 @@ namespace MonitorImpresoras
     /// </summary>
     public partial class MainView : Window
     {
-        PrintServer servidor = new PrintServer();
+        PrintServer servidor = new LocalPrintServer();
         public MainView()
         {
             InitializeComponent();
