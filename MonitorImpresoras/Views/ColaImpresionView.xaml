@@ -9,13 +9,13 @@
     <StackPanel>
         <TextBlock Text="Cola de impresión" FontSize="16" Margin="5" FontWeight="ExtraLight" />
         <DataGrid ItemsSource="{Binding Path=CollectionView}"
-              CanUserSortColumns="True"
-              HorizontalScrollBarVisibility="Auto" 
-              VerticalScrollBarVisibility="Auto" 
-              IsReadOnly="True" 
-              AutoGenerateColumns="False" 
-              HorizontalAlignment="Stretch"
-              RowHeaderWidth="0"
+                  CanUserSortColumns="True"
+                  HorizontalScrollBarVisibility="Auto" 
+                  VerticalScrollBarVisibility="Auto" 
+                  IsReadOnly="True" 
+                  AutoGenerateColumns="False" 
+                  HorizontalAlignment="Stretch"
+                  RowHeaderWidth="0"
                   MaxHeight="150"
                   SelectedItem="{Binding Path=JobSelected, Mode=TwoWay}">
             <DataGrid.Columns>

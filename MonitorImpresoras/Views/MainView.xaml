@@ -8,7 +8,7 @@
         Title="Monitor impresoras" Height="450" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="10*"/>
             <ColumnDefinition Width="10*"/>
             <ColumnDefinition Width="10*"/>
@@ -17,11 +17,11 @@
             <ColumnDefinition Width="10*"/>
             <ColumnDefinition Width="10*"/>
             <ColumnDefinition Width="10*"/>
-            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="10*" />
+            <RowDefinition Height="2*" />
             <RowDefinition Height="Auto" MaxHeight="200" />
             <RowDefinition Height="10*" />
             <RowDefinition Height="Auto" MaxHeight="200" />
@@ -40,27 +40,10 @@
                             <TextBlock Text="Menú"/>
                         </DockPanel>
                     </MenuItem.Header>
-                    <MenuItem>
+                    <MenuItem Command="{Binding Path=SalirCommand}">
                         <MenuItem.Header>
                             <DockPanel>
-                                <TextBlock Text="&#xf02f;" FontFamily="{StaticResource FontAwesome}" Margin="0 0 5 0" VerticalAlignment="Center" />
-                                <TextBlock Text="Procesos en impresión"/>
-                            </DockPanel>
-                        </MenuItem.Header>
-                    </MenuItem>
-                    <MenuItem>
-                        <MenuItem.Header>
-                            <DockPanel>
-                                <TextBlock Text="&#xf03a;" FontFamily="{StaticResource FontAwesome}" Margin="0 0 5 0" VerticalAlignment="Center" />
-                                <TextBlock Text="Ver cola de impresión"/>
-                            </DockPanel>
-                        </MenuItem.Header>
-                    </MenuItem>
-                    <Separator />
-                    <MenuItem>
-                        <MenuItem.Header>
-                            <DockPanel>
-                                <TextBlock Text="&#xf2f5;" FontFamily="{StaticResource FontAwesome}" Margin="0 0 5 0" VerticalAlignment="Center" />
+                                <TextBlock Text="&#xf2f5;" FontFamily="{StaticResource FontAwesome}" Margin="0 0 5 0" VerticalAlignment="Center" Foreground="OrangeRed" />
                                 <TextBlock Text="Salir"/>
                             </DockPanel>
                         </MenuItem.Header>
@@ -69,22 +52,88 @@
                 <MenuItem>
                     <MenuItem.Header>
                         <DockPanel>
-                            <TextBlock Text="&#xf013;" FontFamily="{StaticResource FontAwesome}" Margin="0 0 5 0" VerticalAlignment="Center" Foreground="Gray" />
-                            <TextBlock Text="Opciones"/>
+                            <TextBlock Text="&#xf6ff;" FontFamily="{StaticResource FontAwesome}" Margin="0 0 5 0" VerticalAlignment="Center" Foreground="Gray" />
+                            <TextBlock Text="Impresora"/>
                         </DockPanel>
                     </MenuItem.Header>
-                    <MenuItem Command="{Binding Path=SubirPrioridadCommand}">
+                    <MenuItem Command="{Binding Path=ReanudarPrinterCommand}">
                         <MenuItem.Header>
                             <DockPanel>
-                                <TextBlock Text="&#xf0aa;" FontFamily="{StaticResource FontAwesome}" Margin="0 0 5 0" VerticalAlignment="Center" Foreground="Green" />
+                                <TextBlock Text="&#xf04b;" FontFamily="{StaticResource FontAwesome}" Margin="0 0 5 0" VerticalAlignment="Center" Foreground="LimeGreen" />
+                                <TextBlock Text="Reanudar"/>
+                            </DockPanel>
+                        </MenuItem.Header>
+                    </MenuItem>
+                    <MenuItem Command="{Binding Path=PausarPrinterCommand}">
+                        <MenuItem.Header>
+                            <DockPanel>
+                                <TextBlock Text="&#xf04c;" FontFamily="{StaticResource FontAwesome}" Margin="0 0 5 0" VerticalAlignment="Center" Foreground="OrangeRed" />
+                                <TextBlock Text="Pausar"/>
+                            </DockPanel>
+                        </MenuItem.Header>
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem Command="{Binding Path=SubirPrioridadPrinterCommand}">
+                        <MenuItem.Header>
+                            <DockPanel>
+                                <TextBlock Text="&#xf062;" FontFamily="{StaticResource FontAwesome}" Margin="0 0 5 0" VerticalAlignment="Center" Foreground="LimeGreen"/>
                                 <TextBlock Text="Subir prioridad"/>
                             </DockPanel>
                         </MenuItem.Header>
                     </MenuItem>
-                    <MenuItem Command="{Binding Path=BajarPrioridadCommand}">
+                    <MenuItem Command="{Binding Path=BajarPrioridadPrinterCommand}">
                         <MenuItem.Header>
                             <DockPanel>
-                                <TextBlock Text="&#xf0ab;" FontFamily="{StaticResource FontAwesome}" Margin="0 0 5 0" VerticalAlignment="Center" Foreground="Red" />
+                                <TextBlock Text="&#xf063;" FontFamily="{StaticResource FontAwesome}" Margin="0 0 5 0" VerticalAlignment="Center" Foreground="OrangeRed"/>
+                                <TextBlock Text="Bajar prioridad"/>
+                            </DockPanel>
+                        </MenuItem.Header>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem>
+                    <MenuItem.Header>
+                        <DockPanel>
+                            <TextBlock Text="&#xf02f;" FontFamily="{StaticResource FontAwesome}" Margin="0 0 5 0" VerticalAlignment="Center" Foreground="Gray" />
+                            <TextBlock Text="Documento"/>
+                        </DockPanel>
+                    </MenuItem.Header>
+                    <MenuItem Command="{Binding Path=ReanudarJobCommand}">
+                        <MenuItem.Header>
+                            <DockPanel>
+                                <TextBlock Text="&#xf04b;" FontFamily="{StaticResource FontAwesome}" Margin="0 0 5 0" VerticalAlignment="Center" Foreground="LimeGreen" />
+                                <TextBlock Text="Reanudar"/>
+                            </DockPanel>
+                        </MenuItem.Header>
+                    </MenuItem>
+                    <MenuItem Command="{Binding Path=PausarJobCommand}">
+                        <MenuItem.Header>
+                            <DockPanel>
+                                <TextBlock Text="&#xf04c;" FontFamily="{StaticResource FontAwesome}" Margin="0 0 5 0" VerticalAlignment="Center" Foreground="OrangeRed" />
+                                <TextBlock Text="Pausar"/>
+                            </DockPanel>
+                        </MenuItem.Header>
+                    </MenuItem>
+                    <MenuItem Command="{Binding Path=ReiniciarJobCommand}">
+                        <MenuItem.Header>
+                            <DockPanel>
+                                <TextBlock Text="&#xf2f9;" FontFamily="{StaticResource FontAwesome}" Margin="0 0 5 0" VerticalAlignment="Center" Foreground="Orange" />
+                                <TextBlock Text="Reiniciar"/>
+                            </DockPanel>
+                        </MenuItem.Header>
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem Command="{Binding Path=SubirPrioridadJobCommand}">
+                        <MenuItem.Header>
+                            <DockPanel>
+                                <TextBlock Text="&#xf062;" FontFamily="{StaticResource FontAwesome}" Margin="0 0 5 0" VerticalAlignment="Center" Foreground="LimeGreen" />
+                                <TextBlock Text="Subir prioridad"/>
+                            </DockPanel>
+                        </MenuItem.Header>
+                    </MenuItem>
+                    <MenuItem Command="{Binding Path=BajarPrioridadJobCommand}">
+                        <MenuItem.Header>
+                            <DockPanel>
+                                <TextBlock Text="&#xf063;" FontFamily="{StaticResource FontAwesome}" Margin="0 0 5 0" VerticalAlignment="Center" Foreground="OrangeRed" />
                                 <TextBlock Text="Bajar prioridad"/>
                             </DockPanel>
                         </MenuItem.Header>
@@ -92,7 +141,7 @@
                     <MenuItem Command="{Binding Path=CancelarJobCommand}">
                         <MenuItem.Header>
                             <DockPanel>
-                                <TextBlock Text="&#xf057;" FontFamily="{StaticResource FontAwesome}" Margin="0 0 5 0" VerticalAlignment="Center" Foreground="Red" />
+                                <TextBlock Text="&#xf00d;" FontFamily="{StaticResource FontAwesome}" Margin="0 0 5 0" VerticalAlignment="Center" Foreground="OrangeRed" />
                                 <TextBlock Text="Cancelar"/>
                             </DockPanel>
                         </MenuItem.Header>

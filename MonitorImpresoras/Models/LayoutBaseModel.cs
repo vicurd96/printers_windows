@@ -30,16 +30,6 @@ namespace MonitorImpresoras.Models
             }
         }
 
-        public UserControl ProcesosView {
-            get {
-                return _procesosView;
-            }
-            set {
-                _procesosView = value;
-                RaisePropertyChanged("ProcesosView");
-            }
-        }
-
         public UserControl ColaView {
             get {
                 return _colaView;

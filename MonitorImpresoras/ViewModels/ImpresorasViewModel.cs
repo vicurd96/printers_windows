@@ -15,6 +15,8 @@ namespace MonitorImpresoras.ViewModels
     public class ImpresorasViewModel : ViewModelBase
     {
         public ObservableCollection<ImpresorasModel> ImpresorasModel { get; }
+        private ImpresorasModel _printerSelected;
+        public ImpresorasModel PrinterSelected { get => _printerSelected; set { _printerSelected = value; RaisePropertyChanged("PrinterSelected"); } }
         private List<PrintQueueMonitor> listMonitor = new List<PrintQueueMonitor>();
         public CollectionView CollectionView { get => (CollectionView)CollectionViewSource.GetDefaultView(ImpresorasModel); }
 
@@ -22,6 +24,7 @@ namespace MonitorImpresoras.ViewModels
         {
             ImpresorasModel = new ObservableCollection<ImpresorasModel>();
             Inicializar();
+            Mediator.Subscribe(Metodo.CambiarStatusPrinter, CambiarStatus);
         }
 
         public void Inicializar()
@@ -90,6 +93,48 @@ namespace MonitorImpresoras.ViewModels
                     });
                 }
                 CollectionView.Refresh();
+            });
+        }
+
+        private void CambiarStatus(object param = null)
+        {
+            App.Current.Dispatcher.BeginInvoke((Action)delegate
+            {
+                if (PrinterSelected != null && param != null) {
+                    using(PrintQueue printQueue = new PrintQueue(servidor, PrinterSelected.Nombre, PrintSystemDesiredAccess.AdministratePrinter)){
+                        if(printQueue != null)
+                        {
+                            Accion accion = (Accion)param;
+                            switch (accion)
+                            {
+                                case Accion.Pausar:
+                                    if (printQueue.QueueStatus != PrintQueueStatus.Paused)
+                                        printQueue.Pause();
+                                    break;
+                                case Accion.Reanudar:
+                                    if (printQueue.QueueStatus == PrintQueueStatus.Paused)
+                                        printQueue.Resume();
+                                    break;
+                                case Accion.SubirPrioridad:
+                                    if (printQueue.Priority < (int)PrintJobPriority.Maximum)
+                                    {
+                                        printQueue.Priority++;
+                                        printQueue.Commit();
+                                        Actualizar();
+                                    }
+                                    break;
+                                case Accion.BajarPrioridad:
+                                    if (printQueue.Priority > (int)PrintJobPriority.Minimum)
+                                    {
+                                        printQueue.Priority--;
+                                        printQueue.Commit();
+                                        Actualizar();
+                                    }
+                                    break;
+                            }
+                        }
+                    }
+                }
             });
         }
     }

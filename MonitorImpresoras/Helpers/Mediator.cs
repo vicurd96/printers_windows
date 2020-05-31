@@ -8,6 +8,9 @@ namespace MonitorImpresoras.Helpers
     {
         SubirPrioridad,
         BajarPrioridad,
+        Pausar,
+        Reanudar,
+        Reiniciar
     }
 
     public enum Metodo
@@ -15,7 +18,8 @@ namespace MonitorImpresoras.Helpers
         ActualizarJobs,
         CambiarPrioridadJob,
         CancelarJob,
-        PausarImpresion
+        CambiarStatusJob,
+        CambiarStatusPrinter
     }
 
     public static class Mediator

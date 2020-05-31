@@ -229,10 +229,7 @@ namespace MonitorImpresoras.Helpers
                 #region iterate through all elements in the data array
                 for (int i = 0; i < data.Count(); i++)
                 {
-                    if ((data[i].Field ==
-                           (ushort)PRINTERJOBNOTIFICATIONTYPES.JOB_NOTIFY_FIELD_STATUS) &&
-                         (data[i].Type == (ushort)PRINTERNOTIFICATIONTYPES.JOB_NOTIFY_TYPE)
-                        )
+                    if ((data[i].Type == (ushort)PRINTERNOTIFICATIONTYPES.JOB_NOTIFY_TYPE))
                     {
                         JOBSTATUS jStatus = (JOBSTATUS)Enum.Parse(typeof(JOBSTATUS),
                                               data[i].NotifyData.Data.cbBuf.ToString());
@@ -253,7 +250,6 @@ namespace MonitorImpresoras.Helpers
                             objJobDict.TryGetValue(intJobID, out strJobName);
                             if (strJobName == null) strJobName = "";
                         }
-                        //Let us raise the event
                         OnJobStatusChange?.Invoke(this,
                           new PrintJobChangeEventArgs(intJobID, strJobName, jStatus, pji));
                     }

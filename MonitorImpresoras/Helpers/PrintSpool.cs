@@ -182,28 +182,17 @@ dmPanningHeight == {26}",
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
     public struct PRINTER_INFO_2
     {
-        [MarshalAs(UnmanagedType.LPTStr)]
         public string pServerName;
-        [MarshalAs(UnmanagedType.LPTStr)]
         public string pPrinterName;
-        [MarshalAs(UnmanagedType.LPTStr)]
         public string pShareName;
-        [MarshalAs(UnmanagedType.LPTStr)]
         public string pPortName;
-        [MarshalAs(UnmanagedType.LPTStr)]
         public string pDriverName;
-        [MarshalAs(UnmanagedType.LPTStr)]
         public string pComment;
-        [MarshalAs(UnmanagedType.LPTStr)]
         public string pLocation;
         public IntPtr pDevMode;
-        [MarshalAs(UnmanagedType.LPTStr)]
         public string pSepFile;
-        [MarshalAs(UnmanagedType.LPTStr)]
         public string pPrintProcessor;
-        [MarshalAs(UnmanagedType.LPTStr)]
         public string pDatatype;
-        [MarshalAs(UnmanagedType.LPTStr)]
         public string pParameters;
         public IntPtr pSecurityDescriptor;
         public uint Attributes;
@@ -220,17 +209,11 @@ dmPanningHeight == {26}",
     public struct JOB_INFO_1
     {
         public UInt32 JobId;
-        [MarshalAs(UnmanagedType.LPStr)]
         public string pPrinterName;
-        [MarshalAs(UnmanagedType.LPStr)]
         public string pMachineName;
-        [MarshalAs(UnmanagedType.LPStr)]
         public string pUserName;
-        [MarshalAs(UnmanagedType.LPStr)]
         public string pDocument;
-        [MarshalAs(UnmanagedType.LPStr)]
         public string pDatatype;
-        [MarshalAs(UnmanagedType.LPStr)]
         public string pStatus;
         public UInt32 Status;
         public UInt32 Priority;
@@ -245,21 +228,28 @@ dmPanningHeight == {26}",
         ERROR_UNKNOWN_PRINTPROCESSOR = 1798
     }
 
+    public struct PRINTER_DEFAULTS
+    {
+        public IntPtr pDatatype;
+        public IntPtr pDevMode;
+        public uint DesiredAccess;
+    }
+
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
     public struct JOB_INFO_2
     {
         public UInt32 JobId;
-        public IntPtr pPrinterName;
-        public IntPtr pMachineName;
-        public IntPtr pUserName;
-        public IntPtr pDocument;
-        public IntPtr pNotifyName;
-        public IntPtr pDatatype;
-        public IntPtr pPrintProcessor;
-        public IntPtr pParameters;
-        public IntPtr pDriverName;
-        public IntPtr pDevMode;
-        public IntPtr pStatus;
+        public string pPrinterName;
+        public string pMachineName;
+        public string pUserName;
+        public string pDocument;
+        public string pNotifyName;
+        public string pDatatype;
+        public string pPrintProcessor;
+        public string pParameters;
+        public string pDriverName;
+        public DEVMODE pDevMode;
+        public string pStatus;
         public IntPtr pSecurityDescriptor;
         public UInt32 Status;
         public UInt32 Priority;
