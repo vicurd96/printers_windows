@@ -37,7 +37,13 @@
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Compartida" Binding="{Binding Compartida}" Width="1*" />
                 <DataGridTextColumn Header="Puerto" Binding="{Binding Puerto}" Width="1*" />
-                <DataGridTextColumn Header="Estado" Binding="{Binding Estado}" Width="1*"/>
+                <DataGridTextColumn Header="Estado" Binding="{Binding Estado}" Width="1*">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="ToolTip" Value="{Binding Estado}" />
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
                 <DataGridTemplateColumn Header="Prioridad" Width="1*" SortMemberPath="Prioridad" SortDirection="Descending" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

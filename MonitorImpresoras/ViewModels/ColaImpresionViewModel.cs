@@ -175,9 +175,16 @@ namespace MonitorImpresoras.ViewModels
                     }
                     if (model != null)
                     {
-                        model.JobStatus = (JOBSTATUS)infoJob.Status;
-                        model.Estado = ((int)infoJob.Status).ToString();
-                        model.Priority = ((int)infoJob.Priority).ToString();
+                        if ((JOBSTATUS)infoJob.Status == JOBSTATUS.JOB_STATUS_COMPLETE ||
+                            ((JOBSTATUS)infoJob.Status == JOBSTATUS.JOB_STATUS_PRINTED) ||
+                            (JOBSTATUS)infoJob.Status == JOBSTATUS.JOB_STATUS_DELETED)
+                            ColaImpresionModel.Remove(model);
+                        else
+                        {
+                            model.JobStatus = (JOBSTATUS)infoJob.Status;
+                            model.Estado = ((int)infoJob.Status).ToString();
+                            model.Priority = ((int)infoJob.Priority).ToString();
+                        }
                     }
                     else
                     {

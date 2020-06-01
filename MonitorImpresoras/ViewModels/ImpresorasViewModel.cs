@@ -39,7 +39,7 @@ namespace MonitorImpresoras.ViewModels
                     isCompartida = queue.IsShared, 
                     Status = (int)queue.QueueStatus, 
                     Puerto = queue.QueuePort.Name,
-                    Prioridad = queue.Priority
+                    Prioridad = queue.Priority,
                 });
                 PrintQueueMonitor pqm = new PrintQueueMonitor(queue.Name, servidor);
                 listMonitor.Add(pqm);

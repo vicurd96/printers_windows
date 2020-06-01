@@ -35,7 +35,13 @@
                     </DataGridTextColumn.CellStyle>
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Páginas" MaxWidth="64" Binding="{Binding NumPages}" Width="1*" />
-                <DataGridTextColumn Header="Estado" Binding="{Binding Estado}" Width="1*" />
+                <DataGridTextColumn Header="Estado" Binding="{Binding Estado}" Width="1*">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="ToolTip" Value="{Binding Estado}" />
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
                 <DataGridTextColumn Header="Usuario" Binding="{Binding Owner}" Width="1*" />
                 <DataGridTextColumn Header="Prioridad" Binding="{Binding Priority}" Width="1*" SortDirection="Descending"/>
             </DataGrid.Columns>

@@ -17,5 +17,6 @@ namespace MonitorImpresoras.Models
         public string Compartida { get => _compartida ? "Sí" : "No"; }
         public int Prioridad { get => _prioridad; set { _prioridad = value; RaisePropertyChanged(nameof(Prioridad)); } }
         public bool isCompartida { get => _compartida; set { _compartida = value; RaisePropertyChanged(nameof(isCompartida)); } }
+        public bool isRed { get => _red; set { _red = value; RaisePropertyChanged(nameof(isRed)); } }
     }
 }
