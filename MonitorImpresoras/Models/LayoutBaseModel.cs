@@ -8,7 +8,7 @@ namespace MonitorImpresoras.Models
 {
     public class LayoutBaseModel : INotifyPropertyChanged
     {
-        private UserControl _impresorasView, _procesosView, _colaView;
+        private UserControl _impresorasView, _colaView;
 
         private List<UserControl> _pageViewModels;
         public List<UserControl> PageViewModels {

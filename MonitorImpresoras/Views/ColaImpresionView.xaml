@@ -17,6 +17,7 @@
                   HorizontalAlignment="Stretch"
                   RowHeaderWidth="0"
                   MaxHeight="150"
+                  MinHeight="150"
                   SelectedItem="{Binding Path=JobSelected, Mode=TwoWay}">
             <DataGrid.Columns>
                 <!--<DataGridTextColumn Header="Número" Binding="{Binding Id}" Width="1*">
@@ -26,7 +27,13 @@
                         </Style>
                     </DataGridTextColumn.EditingElementStyle>
                 </DataGridTextColumn>-->
-                <DataGridTextColumn Header="Nombre documento" Binding="{Binding Name}" Width="3*"/>
+                <DataGridTextColumn Header="Nombre documento" Binding="{Binding Name}" Width="3*">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="ToolTip" Value="{Binding PrinterName}" />
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
                 <DataGridTextColumn Header="Páginas" MaxWidth="64" Binding="{Binding NumPages}" Width="1*" />
                 <DataGridTextColumn Header="Estado" Binding="{Binding Estado}" Width="1*" />
                 <DataGridTextColumn Header="Usuario" Binding="{Binding Owner}" Width="1*" />

@@ -6,7 +6,7 @@ namespace MonitorImpresoras.Models
     public class TrabajoImpresionModel : BaseModel
     {
         private int _id, _numPages;
-        private string _name, _owner, _estado, _prioridad;
+        private string _name, _owner, _estado, _prioridad, _printerName;
         private JOBSTATUS _status;
         private int _priority;
 
@@ -17,5 +17,6 @@ namespace MonitorImpresoras.Models
         public int NumPages { get => _numPages; set { _numPages = value; RaisePropertyChanged("NumPages"); } }
         public string Owner { get => _owner; set { _owner = value; RaisePropertyChanged(nameof(Owner)); } }
         public string Priority { get => jobPriorityDict.TryGetValue(_priority, out _prioridad) ? _prioridad : _priority.ToString(); set { if(int.TryParse(value, out _priority)) RaisePropertyChanged(nameof(Priority)); } }
+        public string PrinterName { get => _printerName; set { _printerName = value; RaisePropertyChanged(nameof(PrinterName)); } }
     }
 }

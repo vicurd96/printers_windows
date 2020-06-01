@@ -25,9 +25,10 @@
                   HorizontalAlignment="Stretch"
                   RowHeaderWidth="0"
                   MaxHeight="150"
+                  MinHeight="150"
                   SelectedItem="{Binding PrinterSelected, Mode=TwoWay}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Nombre" Binding="{Binding Nombre}" Width="2*" SortDirection="Ascending" SortMemberPath="Nombre">
+                <DataGridTextColumn Header="Nombre" Binding="{Binding Nombre}" Width="2*" SortMemberPath="Nombre">
                     <DataGridTextColumn.EditingElementStyle>
                         <Style TargetType="TextBox">
                             <Setter Property="MaxLength" Value="5"/>
@@ -37,7 +38,7 @@
                 <DataGridTextColumn Header="Compartida" Binding="{Binding Compartida}" Width="1*" />
                 <DataGridTextColumn Header="Puerto" Binding="{Binding Puerto}" Width="1*" />
                 <DataGridTextColumn Header="Estado" Binding="{Binding Estado}" Width="1*"/>
-                <DataGridTemplateColumn Header="Prioridad" Width="1*" SortMemberPath="Prioridad">
+                <DataGridTemplateColumn Header="Prioridad" Width="1*" SortMemberPath="Prioridad" SortDirection="Descending" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Path=Prioridad}"/>

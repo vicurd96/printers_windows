@@ -7,6 +7,7 @@ using System.Linq;
 using System.Printing;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Threading;
 
@@ -29,9 +30,7 @@ namespace MonitorImpresoras.ViewModels
 
         public void Inicializar()
         {
-            PrintQueueCollection queues = servidor.GetPrintQueues(new EnumeratedPrintQueueTypes[] { 
-                EnumeratedPrintQueueTypes.WorkOffline
-            });
+            PrintQueueCollection queues = servidor.GetPrintQueues();
 
             foreach (PrintQueue queue in queues)
             {
@@ -63,7 +62,8 @@ namespace MonitorImpresoras.ViewModels
                     NumPages = e.JobNumPages,
                     Owner = e.JobOwner,
                     Estado = ((int)e.JobStatus).ToString(),
-                    Priority = e.JobPriority.ToString()
+                    Priority = e.JobPriority.ToString(),
+                    PrinterName = e.JobPrinter
                 });
             }
         }
@@ -77,9 +77,7 @@ namespace MonitorImpresoras.ViewModels
         {
             App.Current.Dispatcher.BeginInvoke(delegate
             {
-                PrintQueueCollection queues = servidor.GetPrintQueues(new EnumeratedPrintQueueTypes[] {
-                    EnumeratedPrintQueueTypes.WorkOffline
-                });
+                PrintQueueCollection queues = servidor.GetPrintQueues();
                 ImpresorasModel.Clear();
                 foreach (PrintQueue queue in queues)
                 {
@@ -105,32 +103,41 @@ namespace MonitorImpresoras.ViewModels
                         if(printQueue != null)
                         {
                             Accion accion = (Accion)param;
-                            switch (accion)
+                            try
                             {
-                                case Accion.Pausar:
-                                    if (printQueue.QueueStatus != PrintQueueStatus.Paused)
-                                        printQueue.Pause();
-                                    break;
-                                case Accion.Reanudar:
-                                    if (printQueue.QueueStatus == PrintQueueStatus.Paused)
-                                        printQueue.Resume();
-                                    break;
-                                case Accion.SubirPrioridad:
-                                    if (printQueue.Priority < (int)PrintJobPriority.Maximum)
-                                    {
-                                        printQueue.Priority++;
-                                        printQueue.Commit();
-                                        Actualizar();
-                                    }
-                                    break;
-                                case Accion.BajarPrioridad:
-                                    if (printQueue.Priority > (int)PrintJobPriority.Minimum)
-                                    {
-                                        printQueue.Priority--;
-                                        printQueue.Commit();
-                                        Actualizar();
-                                    }
-                                    break;
+                                switch (accion)
+                                {
+                                    case Accion.Pausar:
+                                        if (printQueue.QueueStatus != PrintQueueStatus.Paused)
+                                            printQueue.Pause();
+                                        break;
+                                    case Accion.Reanudar:
+                                        if (printQueue.QueueStatus == PrintQueueStatus.Paused)
+                                            printQueue.Resume();
+                                        break;
+                                    case Accion.SubirPrioridad:
+                                        if (printQueue.Priority < (int)PrintJobPriority.Maximum)
+                                        {
+                                            printQueue.Priority++;
+                                            printQueue.Commit();
+                                            Actualizar();
+                                        }
+                                        break;
+                                    case Accion.BajarPrioridad:
+                                        if (printQueue.Priority > (int)PrintJobPriority.Minimum)
+                                        {
+                                            printQueue.Priority--;
+                                            printQueue.Commit();
+                                            Actualizar();
+                                        }
+                                        break;
+                                }
+                            }
+                            catch (Exception)
+                            {
+                                string messageError = "Ocurrió un error inesperado al cambiar alguna propiedad de la impresora";
+                                string captionError = "Cambiar impresora";
+                                MessageBox.Show(messageError, captionError, MessageBoxButton.OK, MessageBoxImage.Error);
                             }
                         }
                     }
